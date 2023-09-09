@@ -5,6 +5,8 @@
 #include <memory>
 #include <functional>
 
+struct GLFWwindow;
+
 namespace Vizzio {
 
 	struct ApplicationSpecification
@@ -25,7 +27,18 @@ namespace Vizzio {
 		void Run(); 
 
 	private:
+		void Init();
+		void Shutdown();
+
+	private:
 		ApplicationSpecification m_Specification;
+		GLFWwindow* m_WindowHandle = nullptr;
+
+		bool m_bRunning = false; 
+		 
+		float m_TimeStep = 0.0f;
+		float m_FrameTime = 0.0f;
+		float m_LastFrameTime = 0.0f;
 
 	};
 
