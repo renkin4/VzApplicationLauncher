@@ -12,7 +12,7 @@ project "VzApplicationCore"
       "src",
 
       -- "../vendor/imgui",
-      -- "../vendor/glfw/include",
+      "../vendor/glfw/include",
       -- "../vendor/stb_image",
 
       -- "%{IncludeDir.VulkanSDK}",
@@ -22,7 +22,7 @@ project "VzApplicationCore"
    links
    {
       --  "ImGui",
-      --  "GLFW",
+       "GLFW",
 
       --  "%{Library.Vulkan}",
    }

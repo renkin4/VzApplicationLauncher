@@ -10,9 +10,9 @@ project "VzApplicationLauncher"
    includedirs
    {
       "src",
-      "../VzApplicationCore/src"
+      "../VzApplicationCore/src",
       -- "../vendor/imgui",
-      -- "../vendor/glfw/include",
+      "../vendor/glfw/include",
       -- "../vendor/stb_image",
 
       -- "%{IncludeDir.VulkanSDK}",
@@ -23,7 +23,7 @@ project "VzApplicationLauncher"
    {
       "VzApplicationCore",
       --  "ImGui",
-      --  "GLFW",
+       "GLFW",
 
       --  "%{Library.Vulkan}",
    }
