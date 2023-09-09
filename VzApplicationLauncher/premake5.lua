@@ -47,7 +47,24 @@ project "VzApplicationLauncher"
       symbols "On"
 
    filter "configurations:Dist"
-      defines { "VZ_DIST" }
+      defines { "VZ_DIST"}
+      runtime "Release"
+      optimize "On"
+      symbols "Off"
+
+   filter "configurations:Debug_Dev"
+      defines { "VZ_DEBUG", "VZ_DEV"  }
+      runtime "Debug"
+      symbols "On"
+
+   filter "configurations:Release_Dev"
+      defines { "VZ_RELEASE", "VZ_DEV" }
+      runtime "Release"
+      optimize "On"
+      symbols "On"
+
+   filter "configurations:Dist_Dev"
+      defines { "VZ_DIST", "VZ_DEV" }
       runtime "Release"
       optimize "On"
       symbols "Off"

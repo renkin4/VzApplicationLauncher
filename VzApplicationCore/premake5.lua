@@ -50,3 +50,20 @@ project "VzApplicationCore"
       runtime "Release"
       optimize "On"
       symbols "Off"
+
+   filter "configurations:Release_Dev"
+      defines { "VZ_RELEASE", "VZ_DEV" }
+      runtime "Release"
+      optimize "On"
+      symbols "On"
+ 
+   filter "configurations:Debug_Dev"
+      defines { "VZ_DEBUG" }
+      runtime "Debug"
+      symbols "On"
+
+   filter "configurations:Dist_Dev"
+      defines { "VZ_DIST", "VZ_DEV" }
+      runtime "Release"
+      optimize "On"
+      symbols "Off"
