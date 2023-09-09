@@ -1,5 +1,5 @@
 project "VzApplicationLauncher"
-   kind "StaticLib"
+   kind "ConsoleApp"
    language "C++"
    cppdialect "C++20"
    targetdir "bin/%{cfg.buildcfg}"
