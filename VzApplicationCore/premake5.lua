@@ -12,20 +12,24 @@ project "VzApplicationCore"
       "src",
 
       "../vendor/imgui",
-      "../vendor/glfw/include",
+      "../vendor/glfw/include",  
+      "../vendor/gl3w/include",  
       -- "../vendor/stb_image",
 
       -- "%{IncludeDir.VulkanSDK}",
-      "%{IncludeDir.glm}",
+      "%{IncludeDir.glm}", 
+      "%{IncludeDir.gl3w}", 
    }
 
    links
    {
       "ImGui",
       "opengl32.lib",
-      "GLFW",
+      "GLFW",  
+      "gl3w",  
 
       --  "%{Library.Vulkan}",
+      --  "%{Library.glew}",
    }
 
    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
