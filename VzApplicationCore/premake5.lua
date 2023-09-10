@@ -16,7 +16,7 @@ project "VzApplicationCore"
       -- "../vendor/stb_image",
 
       -- "%{IncludeDir.VulkanSDK}",
-      -- "%{IncludeDir.glm}",
+      "%{IncludeDir.glm}",
    }
 
    links

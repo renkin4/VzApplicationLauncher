@@ -5,11 +5,13 @@
 
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 
 #include <iostream>
 
 static Vizzio::Application* s_Instance = nullptr;
 extern bool g_ApplicationRunning;
+static bool  g_SwapChainRebuild = false;
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -51,7 +53,22 @@ namespace Vizzio {
 			// Generally you may always pass all inputs to dear imgui, and hide them from your application based on those two flags.
 			glfwPollEvents();
 
+			for (auto& layer : m_LayerStack)
+			{
+				layer->OnUpdate(m_TimeStep);
+			}
 
+
+
+			for (auto& layer : m_LayerStack)
+			{
+				layer->OnUIRender();
+			}
+
+			float time = GetTime();
+			m_FrameTime = time - m_LastFrameTime;
+			m_TimeStep = glm::min<float>(m_FrameTime, 0.0333f);
+			m_LastFrameTime = time; 
 		}
 	}
 
@@ -79,11 +96,23 @@ namespace Vizzio {
 	}
 
 	void Application::Shutdown()
-	{ 
+	{
+		for (auto& layer : m_LayerStack)
+		{
+			layer->OnDetach();
+		}
+
+		m_LayerStack.clear();
+
 		glfwDestroyWindow(m_WindowHandle);
 		glfwTerminate();
 
 		g_ApplicationRunning = false;
+	}
+
+	float Application::GetTime()
+	{
+		return (float)glfwGetTime();
 	}
 
 }
