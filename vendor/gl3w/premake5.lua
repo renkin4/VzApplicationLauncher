@@ -8,6 +8,7 @@ project "Gl3w"
  	files
 	{
         "include/gl/gl3w.h",
+        "include/gl/glcorearb.h",
         "include/KHR/khrplatform.h",
         "src/gl3w.c"
     }

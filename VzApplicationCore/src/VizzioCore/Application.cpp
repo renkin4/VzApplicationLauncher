@@ -182,10 +182,10 @@ namespace Vizzio {
 		}
 
 		glfwMakeContextCurrent(m_WindowHandle);  
-	/*	if (gl3wInit()) {
+		if (gl3wInit()) {
 			printf("failed to initialize OpenGL\n");
 			return;
-		}*/
+		}
 
 		glfwSwapInterval(1); // Enable vsync
 		// Setup Dear ImGui context
