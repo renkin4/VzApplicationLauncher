@@ -3,9 +3,13 @@
 #include <stdio.h>          // printf, fprintf
 #include <stdlib.h>         // abort
 
+#include "backends/imgui_impl_glfw.cpp"
+#include "backends/imgui_impl_opengl3.h"
+
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
+
 
 #include <iostream>
 
@@ -58,12 +62,25 @@ namespace Vizzio {
 				layer->OnUpdate(m_TimeStep);
 			}
 
+			// Start the Dear ImGui frame
+			ImGui_ImplOpenGL3_NewFrame();
+			ImGui_ImplGlfw_NewFrame();
+			ImGui::NewFrame();
 
+			// Rendering
+			ImGui::Render();
+			
+			int display_w, display_h;
+			glfwGetFramebufferSize(m_WindowHandle, &display_w, &display_h); 
+
+			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 			for (auto& layer : m_LayerStack)
 			{
 				layer->OnUIRender();
 			}
+
+			glfwSwapBuffers(m_WindowHandle);
 
 			float time = GetTime();
 			m_FrameTime = time - m_LastFrameTime;
@@ -81,18 +98,37 @@ namespace Vizzio {
 			std::cerr << "Could not initalize GLFW!\n";
 			return;
 		}
-		 
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0); 
+
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
 		m_WindowHandle = glfwCreateWindow(m_Specification.Width, m_Specification.Height, m_Specification.Name.c_str(), nullptr, nullptr);
 
 		if (!m_WindowHandle)
 		{
-			glfwTerminate();
+			Shutdown();
 			return;
 		}
 
 		glfwMakeContextCurrent(m_WindowHandle); 
+		glfwSwapInterval(1); // Enable vsync
+		// Setup Dear ImGui context
+
+		IMGUI_CHECKVERSION();
+		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+
+		// Setup Dear ImGui style
+		ImGui::StyleColorsDark();
+		//ImGui::StyleColorsLight();
+
+		// Setup Platform/Renderer backends
+		ImGui_ImplGlfw_InitForOpenGL(m_WindowHandle, true);
+		const char* glsl_version = "#version 130";
+		ImGui_ImplOpenGL3_Init(glsl_version);
 	}
 
 	void Application::Shutdown()
@@ -103,6 +139,11 @@ namespace Vizzio {
 		}
 
 		m_LayerStack.clear();
+
+		// Cleanup
+		ImGui_ImplOpenGL3_Shutdown();
+		ImGui_ImplGlfw_Shutdown();
+		ImGui::DestroyContext();
 
 		glfwDestroyWindow(m_WindowHandle);
 		glfwTerminate();

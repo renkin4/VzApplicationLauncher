@@ -11,7 +11,7 @@ project "VzApplicationCore"
    {
       "src",
 
-      -- "../vendor/imgui",
+      "../vendor/imgui",
       "../vendor/glfw/include",
       -- "../vendor/stb_image",
 
@@ -21,8 +21,9 @@ project "VzApplicationCore"
 
    links
    {
-      --  "ImGui",
-       "GLFW",
+      "ImGui",
+      "opengl32.lib",
+      "GLFW",
 
       --  "%{Library.Vulkan}",
    }

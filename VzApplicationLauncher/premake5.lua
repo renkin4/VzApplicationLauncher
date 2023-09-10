@@ -8,24 +8,18 @@ project "VzApplicationLauncher"
    files { "src/**.h", "src/**.cpp" }
 
    includedirs
-   {
-      "src",
-      "../VzApplicationCore/src",
-      -- "../vendor/imgui",
+   { 
+      "../vendor/imgui",
       "../vendor/glfw/include",
-      -- "../vendor/stb_image",
-
-      -- "%{IncludeDir.VulkanSDK}",
+      
+      "../VzApplicationCore/src", 
+      
       "%{IncludeDir.glm}",
    }
 
    links
    {
-      "VzApplicationCore",
-      --  "ImGui",
-       "GLFW",
-
-      --  "%{Library.Vulkan}",
+      "VzApplicationCore", 
    }
 
    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
@@ -47,6 +41,7 @@ project "VzApplicationLauncher"
       symbols "On"
 
    filter "configurations:Dist"
+      kind "WindowedApp"
       defines { "VZ_DIST"}
       runtime "Release"
       optimize "On"
@@ -64,6 +59,7 @@ project "VzApplicationLauncher"
       symbols "On"
 
    filter "configurations:Dist_Dev"
+      kind "WindowedApp"
       defines { "VZ_DIST", "VZ_DEV" }
       runtime "Release"
       optimize "On"

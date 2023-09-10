@@ -6,6 +6,8 @@
 #include <functional>
 #include "Layer.h"
 
+#include "imgui.h"
+
 struct GLFWwindow; 
 
 namespace Vizzio {
