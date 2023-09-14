@@ -6,11 +6,15 @@ class ExampleLayer : public Vizzio::Layer
 public:
 	virtual void OnUIRender() override
 	{
-		ImGui::Begin("Hello");
+		ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking;
+		window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+		window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+		ImGui::Begin("Hello", nullptr, window_flags);
 		ImGui::Button("Button");
+		 
 		ImGui::End();
 
-		ImGui::ShowDemoWindow();
+		//ImGui::ShowDemoWindow();
 	}
 };
 
@@ -20,6 +24,6 @@ Vizzio::Application* Vizzio::CreateApplication(int argc, char** argv)
 	spec.Name = "Vizzio Example";
 
 	Vizzio::Application* app = new Vizzio::Application(spec);
-	 
+	app->PushLayer<ExampleLayer>(); 
 	return app;
 }
